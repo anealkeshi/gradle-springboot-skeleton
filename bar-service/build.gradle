@@ -1,0 +1,42 @@
+plugins {
+	id 'java-library'
+	id 'eclipse'
+	id 'org.springframework.boot' version '2.0.1.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.5.RELEASE'
+	id 'org.unbroken-dome.test-sets' version '1.5.0'
+}
+
+testSets {  
+  integrationTest
+}
+
+
+check.dependsOn integrationTest  
+integrationTest.mustRunAfter test
+
+project.integrationTest {  
+  outputs.upToDateWhen { false }
+}
+
+tasks.withType(Test) {  
+  testLogging {
+        events "standardOut", "started", "passed", "skipped", "failed"
+    }
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile project(':foo-jar')
+	
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.18.3'
+}
+
+
+bootRun {
+    main = 'me.anilkc.BarServiceApplication'
+}
+
+// springBoot {
+//    mainClassName = 'me.anilkc.BarServiceApplication'
+// }

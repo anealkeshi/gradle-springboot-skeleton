@@ -1,0 +1,17 @@
+plugins {
+    id 'java-library'
+}
+
+
+dependencies {
+}
+
+test {
+    testLogging {
+    	showStandardStreams = true
+        events "passed", "skipped", "failed"
+        exceptionFormat = 'full'
+    }
+}
+
+check.dependsOn test
